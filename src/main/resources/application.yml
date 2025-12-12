@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: weatherservice
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/weather}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:1234}
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+# Swagger/OpenAPI configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    url: /api-docs
+
+# Weather file storage
+weather:
+  file:
+    base-path: ${WEATHER_FILE_BASE_PATH:C:\weather-app}
+  api:
+    base-url: ${WEATHER_API_BASE_URL:http://localhost:8081}

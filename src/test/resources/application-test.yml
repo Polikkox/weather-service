@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: weatherservice-test
+
+  datasource:
+    # These will be overridden by Testcontainers
+    url: jdbc:postgresql://localhost:5432/weather_test
+    username: test
+    password: test
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop  # Recreate schema for each test
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+# Swagger/OpenAPI configuration
+springdoc:
+  api-docs:
+    enabled: false  # Disable in tests
+  swagger-ui:
+    enabled: false  # Disable in tests
+
+# Weather file storage - will be overridden by tests with @TempDir
+weather:
+  file:
+    base-path: ${java.io.tmpdir}/weather-test
+
+# External weather API - will be overridden by WireMock
+  api:
+    base-url: http://localhost:8081
+
+# Logging
+logging:
+  level:
+    com.weather.weatherservice: DEBUG
+    org.springframework.web: INFO
+    org.testcontainers: INFO

@@ -1,0 +1,196 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "WeatherApp",
+        "version": "1.0.0",
+        "description": "Application to check weather"
+    },
+    "paths": {
+        "/api/v1/weather": {
+            "description": "endpoint to check weather for a given location",
+            "servers": [
+                {
+                    "url": "localhost",
+                    "description": ""
+                }
+            ],
+            "get": {
+              "operationId": "checkWeather",
+              "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WeatherResponseDto"
+                                },
+                                "examples": {
+                                    "temperature in °C": {
+                                        "value": "\"25.5\""
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Temperature given in °C"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "examples": {
+                                    "Invalid request": {
+                                        "value": "Invalid request"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Invalid request"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "examples": {
+                        "city": {
+                            "value": "Warsaw"
+                        }
+                    },
+                    "name": "city",
+                    "description": "location",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "query",
+                    "required": true
+                }
+            ]
+        },
+        "/api/v1/weather/history": {
+            "description": "retrieve  historical queries with optional filtering by city and dates range.",
+            "servers": [
+                {
+                    "url": "localhost:8080",
+                    "description": ""
+                }
+            ],
+            "get": {
+              "operationId": "checkWeatherHistory",
+              "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WeatherResponseDto"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Sample Response Description"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "Sample Bad Request Response Description"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "city",
+                    "description": "eg krakow",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "query",
+                    "required": false
+                },
+                {
+                    "name": "fromDate",
+                    "description": "fromDate",
+                    "schema": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "in": "query"
+                },
+                {
+                    "name": "toDate",
+                    "description": "toDate",
+                    "schema": {
+                        "format": "date-time",
+                        "type": "string"
+                    },
+                    "in": "query"
+                }
+            ]
+        },
+        "/api/v1/weather/export": {
+            "description": "Export all weather data to file and clear database",
+            "servers": [
+                {
+                    "url": "localhost:8080",
+                    "description": ""
+                }
+            ],
+            "post": {
+              "operationId": "exportWeatherData",
+              "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "Export completed successfully"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "Export failed"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "WeatherResponseDto": {
+                "title": "Root Type for WeatherResponseDto",
+                "description": "response weather response dto",
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string"
+                    },
+                    "temperature": {
+                        "type": "string"
+                    },
+                    "date": {
+                        "format": "date",
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "city": "warsaw",
+                    "temperature": "25.5",
+                    "date": "2026-06-01"
+                }
+            }
+        }
+    }
+}

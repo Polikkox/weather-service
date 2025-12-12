@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn clean:*)",
+      "Bash(mvn:*)",
+      "Bash(dir:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker-compose ps:*)",
+      "Bash(docker-compose logs:*)",
+      "Bash(docker exec:*)",
+      "Bash(curl:*)",
+      "Bash(docker-compose down:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

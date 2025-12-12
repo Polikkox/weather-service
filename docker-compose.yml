@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: weather-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-weather}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-1234}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - weather-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-weather}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  weather-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: weather-service:latest
+    container_name: weather-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      # Database configuration
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-weather}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER:-postgres}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD:-1234}
+      # External Weather API configuration (connects to host machine)
+      - WEATHER_API_BASE_URL=http://host.docker.internal:8081
+      # Weather file storage path
+      - WEATHER_FILE_BASE_PATH=/app/data
+    env_file:
+      - .env
+    volumes:
+      - weather-data:/app/data
+    networks:
+      - weather-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      start_period: 60s
+      retries: 3
+    labels:
+      - "com.weather-service.description=Spring Boot Weather Service"
+      - "com.weather-service.version=0.0.1-SNAPSHOT"
+
+networks:
+  weather-network:
+    driver: bridge
+    name: weather-network
+
+volumes:
+  postgres-data:
+    driver: local
+    name: weather-postgres-data
+  weather-data:
+    driver: local
+    name: weather-app-data
