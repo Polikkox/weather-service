@@ -1,12 +1,9 @@
 package com.weather.weatherservice.repository;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.weather.weatherservice.entity.Weather;
@@ -14,11 +11,11 @@ import com.weather.weatherservice.entity.Weather;
 @Repository
 public interface WeatherRepository extends JpaRepository<Weather, Long> {
 
-    List<Weather> findAllByOrderByDateTimeDesc();
+    List<Weather> findAllByCity(String city);
 
     List<Weather> findAllByCityAndDateTimeBetween(String city, OffsetDateTime fromDate, OffsetDateTime toDate);
 
-    List<Weather> findAllByCity(String city);
-
     List<Weather> findAllByDateTimeBetween(OffsetDateTime fromDate, OffsetDateTime toDate);
+
+    List<Weather> findAllByOrderByDateTimeDesc();
 }

@@ -1,15 +1,14 @@
 package com.weather.weatherservice;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication
 @EnableScheduling
-public class WeatherServiceApplication {
+class WeatherServiceApplication
 
-    public static void main(String[] args) {
-        SpringApplication.run(WeatherServiceApplication.class, args);
-    }
-
+fun main(args: Array<String>) {
+    runApplication<WeatherServiceApplication>(*args)
 }
+

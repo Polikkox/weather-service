@@ -21,9 +21,6 @@ public class WeatherService {
     @Autowired
     private WeatherRepository weatherRepository;
 
-    @Autowired
-    private FileService fileService;
-
     @Value("${weather.api.base-url:http://localhost:8081}")
     private String baseUrl;
 
