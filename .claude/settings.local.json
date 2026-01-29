@@ -29,7 +29,9 @@
       "Bash(docker run:*)",
       "Bash(docker stop:*)",
       "Bash(timeout:*)",
-      "Bash(docker logs:*)"
+      "Bash(docker logs:*)",
+      "Bash(kubectl describe:*)",
+      "Bash(kubectl get pods:*)"
     ],
     "deny": [],
     "ask": []

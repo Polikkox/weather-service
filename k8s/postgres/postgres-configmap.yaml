@@ -5,4 +5,4 @@ metadata:
 data:
   SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-service:5432/weather"
   WEATHER_FILE_BASE_PATH: "/app/data"
-  WEATHER_API_BASE_URL: "http://weather-api-service:8081"
+  WEATHER_API_BASE_URL: "http://weather-adapter-service:8081"
