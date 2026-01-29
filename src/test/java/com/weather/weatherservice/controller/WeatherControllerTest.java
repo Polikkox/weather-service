@@ -1,7 +1,6 @@
 package com.weather.weatherservice.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
@@ -19,8 +18,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.weather.weatherservice.model.WeatherResponseDto;
-import com.weather.weatherservice.service.ExportService;
-import com.weather.weatherservice.service.WeatherService;
+
+import weatherservice.controller.WeatherController;
+import weatherservice.service.ExportService;
+import weatherservice.service.WeatherService;
 
 @ExtendWith(MockitoExtension.class)
 class WeatherControllerTest {

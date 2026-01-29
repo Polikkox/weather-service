@@ -1,4 +1,4 @@
-# Multi-stage Dockerfile for Spring Boot Weather Service
+# Multi-stage Dockerfile for Spring Boot Weather Service (Maven + Kotlin)
 # Stage 1: Build stage with Maven
 FROM maven:3.9-eclipse-temurin-21 AS builder
 
@@ -15,7 +15,6 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 
 # Build application (skip tests in Docker build)
-# Tests should be run locally before building Docker image
 RUN mvn clean package -DskipTests -B
 
 # Stage 2: Runtime stage with JRE only
@@ -27,11 +26,12 @@ WORKDIR /app
 # Create non-root user for security
 RUN addgroup -S spring && adduser -S spring -G spring
 
-# Copy WAR from builder stage (Spring Boot executable WAR can run as JAR)
-COPY --from=builder /app/target/weatherservice-*.war app.jar
+# Copy WAR from builder stage
+# Spring Boot WAR can be executed as JAR
+COPY --from=builder /app/target/weatherservice-*.war app.war
 
 # Change ownership to non-root user
-RUN chown spring:spring app.jar
+RUN chown spring:spring app.war
 
 # Switch to non-root user
 USER spring:spring
@@ -43,5 +43,5 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
 
-# Run application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run application as WAR (not JAR)
+ENTRYPOINT ["java", "-jar", "app.war"]

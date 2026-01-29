@@ -6,7 +6,7 @@ metadata:
     app: weather-service
     version: "0.0.1-SNAPSHOT"
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: weather-service
@@ -16,16 +16,15 @@ spec:
         app: weather-service
     spec:
       securityContext:
-        fsGroup: 0
-      imagePullSecrets:
-        - name: ghcr-secret
+        fsGroup: 1000
       containers:
         - name: weather-service
-          image: ghcr.io/polikkox/weather-service:latest
+          image: us-central1-docker.pkg.dev/weatherapp-gke/weather-service-repo/weather-service:1.1.1
           securityContext:
-            runAsUser: 0
-            runAsGroup: 0
-          imagePullPolicy: Always
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env:
@@ -62,10 +61,10 @@ spec:
               mountPath: /app/data
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "250m"
+              memory: "256Mi"
+              cpu: "100m"
             limits:
-              memory: "1Gi"
+              memory: "812Mi"
               cpu: "500m"
           livenessProbe:
             httpGet:
@@ -93,6 +92,5 @@ spec:
             failureThreshold: 10
       volumes:
         - name: weather-data
-          hostPath:
-            path: /mnt/data/weather-app-data
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: weather-data-pvc

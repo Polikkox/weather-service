@@ -1,13 +1,11 @@
 package com.weather.weatherservice.e2e;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +19,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.weather.weatherservice.e2e.fixtures.TestDataBuilder;
-import com.weather.weatherservice.entity.Weather;
-import com.weather.weatherservice.repository.WeatherRepository;
+import weatherservice.entity.Weather;
+import weatherservice.repository.WeatherRepository;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

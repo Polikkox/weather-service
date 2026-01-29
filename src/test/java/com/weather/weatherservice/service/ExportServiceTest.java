@@ -18,9 +18,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.weather.weatherservice.entity.Weather;
+import weatherservice.entity.Weather;
 import com.weather.weatherservice.model.WeatherResponseDto;
-import com.weather.weatherservice.repository.WeatherRepository;
+import weatherservice.repository.WeatherRepository;
+import weatherservice.service.ExportService;
+import weatherservice.service.FileService;
 
 @ExtendWith(MockitoExtension.class)
 class ExportServiceTest {

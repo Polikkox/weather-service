@@ -20,9 +20,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
-import com.weather.weatherservice.entity.Weather;
+import weatherservice.entity.Weather;
 import com.weather.weatherservice.model.WeatherResponseDto;
-import com.weather.weatherservice.repository.WeatherRepository;
+import weatherservice.repository.WeatherRepository;
+import weatherservice.service.FileService;
+import weatherservice.service.WeatherService;
 
 @ExtendWith(MockitoExtension.class)
 class WeatherServiceTest {

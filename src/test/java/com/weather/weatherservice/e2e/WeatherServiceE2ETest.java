@@ -21,9 +21,9 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.weather.weatherservice.e2e.fixtures.ExternalApiMocks;
 import com.weather.weatherservice.e2e.fixtures.TestDataBuilder;
-import com.weather.weatherservice.entity.Weather;
+import weatherservice.entity.Weather;
 import com.weather.weatherservice.model.WeatherResponseDto;
-import com.weather.weatherservice.repository.WeatherRepository;
+import weatherservice.repository.WeatherRepository;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;

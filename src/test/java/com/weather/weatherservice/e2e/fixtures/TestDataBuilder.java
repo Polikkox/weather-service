@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.weather.weatherservice.entity.Weather;
+import weatherservice.entity.Weather;
 
 public class TestDataBuilder {
 
