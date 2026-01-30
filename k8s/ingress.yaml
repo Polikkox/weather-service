@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: weather-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+    - http:
+        paths:
+          # weather-service endpoints
+          - path: /api/v1/weather
+            pathType: Prefix
+            backend:
+              service:
+                name: weather-service-service
+                port:
+                  number: 80
+          - path: /actuator
+            pathType: Prefix
+            backend:
+              service:
+                name: weather-service-service
+                port:
+                  number: 80
+          - path: /swagger-ui
+            pathType: Prefix
+            backend:
+              service:
+                name: weather-service-service
+                port:
+                  number: 80
+          - path: /api-docs
+            pathType: Prefix
+            backend:
+              service:
+                name: weather-service-service
+                port:
+                  number: 80
+          # file-service endpoints (wszystko pod /file-service/*)
+          - path: /file-service
+            pathType: Prefix
+            backend:
+              service:
+                name: file-service-service
+                port:
+                  number: 8082

@@ -31,7 +31,11 @@
       "Bash(timeout:*)",
       "Bash(docker logs:*)",
       "Bash(kubectl describe:*)",
-      "Bash(kubectl get pods:*)"
+      "Bash(kubectl get pods:*)",
+      "Bash(kubectl logs:*)",
+      "Bash(kubectl rollout status:*)",
+      "Bash(kubectl config:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []

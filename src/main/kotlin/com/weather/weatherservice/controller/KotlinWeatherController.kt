@@ -5,7 +5,6 @@ import com.weather.weatherservice.model.WeatherResponseDto
 import com.weather.weatherservice.service.KotlinExportService
 import com.weather.weatherservice.service.KotlinWeatherService
 import org.springframework.context.annotation.Primary
-import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import java.time.OffsetDateTime
@@ -17,7 +16,7 @@ class KotlinWeatherController(
     private val exportService: KotlinExportService
 ) : DefaultApiDelegate {
 
-    override fun checkWeather(city: String?): ResponseEntity<WeatherResponseDto> {
+    override fun checkWeather(city: String): ResponseEntity<WeatherResponseDto> {
         if (city.isNullOrBlank()) {
             return ResponseEntity.badRequest().build()
         }
@@ -26,8 +25,8 @@ class KotlinWeatherController(
 
     override fun checkWeatherHistory(
         city: String,
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) fromDate: OffsetDateTime,
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) toDate: OffsetDateTime
+        fromDate: OffsetDateTime,
+        toDate: OffsetDateTime
     ): ResponseEntity<List<WeatherResponseDto>> {
         return ResponseEntity.ok(weatherService.getWeatherHistory(city, fromDate, toDate))
     }
